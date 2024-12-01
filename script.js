@@ -3,6 +3,7 @@ const loadMoreBtn = document.getElementById("loadMore");
 let currentPage = 1;
 const totalPages = 8;
 
+// Function to load images from JSON files
 async function loadImages(page) {
   console.log(`Loading images from images_page${page}.json`);
   try {
@@ -20,8 +21,8 @@ async function loadImages(page) {
       return;
     }
 
+    // Create image elements
     imageUrls.forEach((url) => {
-      console.log(`Loading image URL: ${url}`);
       const imgContainer = document.createElement("div");
       imgContainer.classList.add("image-container");
 
@@ -31,13 +32,15 @@ async function loadImages(page) {
       img.loading = "lazy";
       img.classList.add("gallery-image");
 
+      // Handle successful loading
       img.onload = () => {
         console.log(`Image successfully loaded: ${url}`);
       };
 
+      // Handle failed loading
       img.onerror = () => {
         console.warn(`Image failed to load: ${url}`);
-        imgContainer.innerHTML = `<div class="error-placeholder">Image not found</div>`;
+        imgContainer.innerHTML = `<div class="error-placeholder">Image not available</div>`;
       };
 
       imgContainer.appendChild(img);
