@@ -7,8 +7,8 @@
 
 :root {
   --bg-color: #f9f9f9;
-  --text-color: #222;
-  --accent-color: #4caf50;
+  --text-color: #333;
+  --highlight-color: #555;
   --font-family: "Inter", sans-serif;
 }
 
@@ -24,13 +24,12 @@ body {
 
 header {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 header h1 {
-  color: var(--accent-color);
   font-size: 2rem;
-  margin-bottom: 0.5rem;
+  color: var(--highlight-color);
   font-weight: 300; /* Inter Light */
 }
 
@@ -57,9 +56,9 @@ main {
 .image-container {
   position: relative;
   overflow: hidden;
-  border: 1px solid var(--accent-color);
+  background: #e0e0e0;
   border-radius: 8px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, filter 0.2s;
   cursor: pointer;
 }
 
@@ -67,19 +66,17 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.2s ease-in-out;
 }
 
-.image-container:hover {
-  transform: scale(1.05);
-}
-
-.image-container img:active {
-  cursor: zoom-in;
+.image-container:hover img {
+  filter: grayscale(0%);
 }
 
 footer {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   font-size: 0.9rem;
   color: var(--text-color);
 }
