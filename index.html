@@ -33,6 +33,11 @@
                     `;
                     gallery.appendChild(imgDiv);
                 });
+            })
+            .catch(error => {
+                console.error('Error loading images:', error);
+                const gallery = document.getElementById('gallery');
+                gallery.innerHTML = '<p>Failed to load images. Please try again later.</p>';
             });
     </script>
 </body>
