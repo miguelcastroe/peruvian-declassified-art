@@ -1,86 +1,84 @@
-/* General Reset */
-* {
+/* Minimalistic grayscale design */
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #333;
+  background-color: #f8f8f8;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --bg-color: #f9f9f9;
-  --text-color: #333;
-  --highlight-color: #555;
-  --font-family: "Inter", sans-serif;
-}
-
-body {
-  font-family: var(--font-family);
-  background-color: var(--bg-color);
-  color: var(--text-color);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
 }
 
 header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin: 20px;
 }
 
 header h1 {
   font-size: 2rem;
-  color: var(--highlight-color);
-  font-weight: 300; /* Inter Light */
+  font-weight: 400;
+  color: #222;
 }
 
 header p {
   font-size: 1rem;
-  color: var(--text-color);
-  font-weight: 400; /* Inter Regular */
+  color: #666;
 }
 
-main {
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  justify-content: center;
-}
-
-.gallery {
+#gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  width: 100%;
+  gap: 10px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
 }
 
 .image-container {
-  position: relative;
+  background-color: #e0e0e0;
+  border-radius: 5px;
   overflow: hidden;
-  background: #e0e0e0;
-  border-radius: 8px;
-  transition: transform 0.2s, filter 0.2s;
-  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
 }
 
 .image-container img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(100%);
-  transition: filter 0.2s ease-in-out;
+  transition: transform 0.3s ease;
 }
 
-.image-container:hover img {
-  filter: grayscale(0%);
+.image-container img:hover {
+  transform: scale(1.05);
 }
 
 footer {
   text-align: center;
-  margin-top: 2rem;
-  font-size: 0.9rem;
-  color: var(--text-color);
+  margin: 20px 0;
+}
+
+footer button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+footer button:hover {
+  background-color: #555;
 }
 
 footer p {
-  font-weight: 300;
+  font-size: 0.8rem;
+  color: #777;
+  margin-top: 10px;
 }
