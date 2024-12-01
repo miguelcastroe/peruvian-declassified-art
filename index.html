@@ -1,140 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peruvian Declassified Art</title>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f8f8f8;
-            color: #333;
-            text-align: center;
-        }
-        header {
-            padding: 1rem;
-        }
-        h1 {
-            font-size: 2.5rem;
-            color: #111;
-        }
-        p {
-            margin: 0.5rem 0;
-            font-size: 1rem;
-            color: #555;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            padding: 1rem;
-            justify-content: center;
-        }
-        .image-container {
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .image-container img.hidden {
-            display: none;
-        }
-        .load-more {
-            margin: 1rem;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            color: #fff;
-            background: #333;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .load-more:hover {
-            background: #555;
-        }
-        footer {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: #777;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peruvian Declassified Art</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Peruvian Declassified Art</h1>
-        <p>Explore and celebrate Peru's cultural treasures, now part of the public domain.</p>
-        <p>Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
-    </header>
-
-    <main>
-        <div class="gallery" id="gallery"></div>
-        <button class="load-more" id="loadMoreButton">Load More</button>
-    </main>
-
-    <footer>
-        © 2024 Peruvian Declassified Art
-    </footer>
-
-    <script>
-        const gallery = document.getElementById('gallery');
-        const loadMoreButton = document.getElementById('loadMoreButton');
-
-        let currentPage = 1;
-        const totalPages = 8; // Update based on the number of JSON files
-
-        async function loadImages(page) {
-            try {
-                const response = await fetch(`images_page${page}.json`);
-                if (!response.ok) {
-                    console.error(`Failed to load page ${page}:`, response.status);
-                    return;
-                }
-                const imageUrls = await response.json();
-
-                imageUrls.forEach(url => {
-                    const imageContainer = document.createElement('div');
-                    imageContainer.className = 'image-container';
-
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.alt = "Peruvian Art";
-
-                    // Hide the image if it fails to load
-                    img.onerror = () => {
-                        imageContainer.remove();
-                    };
-
-                    imageContainer.appendChild(img);
-                    gallery.appendChild(imageContainer);
-                });
-            } catch (error) {
-                console.error(`Error loading images for page ${page}:`, error);
-            }
-        }
-
-        loadMoreButton.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                loadImages(currentPage);
-            }
-
-            if (currentPage >= totalPages) {
-                loadMoreButton.style.display = 'none';
-            }
-        });
-
-        // Load the first page of images on page load
-        loadImages(currentPage);
-    </script>
+  <header>
+    <h1>Peruvian Declassified Art</h1>
+    <p>Explore and celebrate Peru's cultural treasures, now part of the public domain.</p>
+  </header>
+  <main id="gallery"></main>
+  <footer>
+    <button id="loadMoreButton">Load More</button>
+    <p>© 2024 Peruvian Declassified Art</p>
+  </footer>
 </body>
 </html>
