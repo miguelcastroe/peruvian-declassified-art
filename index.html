@@ -13,19 +13,18 @@
     <p>Explore and celebrate Peru's cultural treasures, now part of the public domain.</p>
   </header>
   <main>
-    <div class="gallery">
-      <!-- Images will be dynamically loaded here -->
-    </div>
+    <div class="gallery" id="gallery"></div>
   </main>
   <footer>
     <p>Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
   </footer>
   <script>
-    // Load images from images.json
-    fetch('images.json')
-      .then(response => response.json())
-      .then(images => {
-        const gallery = document.querySelector('.gallery');
+    async function loadImages() {
+      const gallery = document.getElementById('gallery');
+      try {
+        const response = await fetch('images.json');
+        const images = await response.json();
+
         images.forEach((url) => {
           const container = document.createElement('div');
           container.className = 'image-container';
@@ -35,14 +34,22 @@
           img.alt = 'Peruvian Artwork';
           img.loading = 'lazy';
 
-          // Remove container if the image fails to load
-          img.onerror = () => container.remove();
+          // Handle image load errors gracefully
+          img.onerror = () => {
+            container.remove(); // Remove the container if the image doesn't load
+          };
 
           container.appendChild(img);
           gallery.appendChild(container);
         });
-      })
-      .catch(err => console.error('Failed to load images:', err));
+      } catch (error) {
+        console.error('Error loading images:', error);
+        gallery.innerHTML = `<p>Failed to load images. Please try again later.</p>`;
+      }
+    }
+
+    // Load images on page load
+    window.onload = loadImages;
   </script>
 </body>
 </html>
