@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peruvian Declassified Art</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Peruvian Declassified Art</h1>
+        <p>Explore and celebrate Peru's cultural treasures, now part of the public domain.</p>
+    </header>
+    <main>
+        <div class="gallery" id="gallery"></div>
+    </main>
+    <footer>
+        <p>Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
+    </footer>
+
+    <script>
+        // Fetch and display images from images.json
+        fetch('images.json')
+            .then(response => response.json())
+            .then(images => {
+                const gallery = document.getElementById('gallery');
+                images.forEach(image => {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = 'image-container';
+                    imgDiv.innerHTML = `
+                        <img src="${image.src}" alt="${image.alt}">
+                        <p>${image.alt}</p>
+                    `;
+                    gallery.appendChild(imgDiv);
+                });
+            });
+    </script>
+</body>
+</html>
