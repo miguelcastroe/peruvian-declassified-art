@@ -4,52 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peruvian Declassified Art</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <h1>Peruvian Declassified Art</h1>
     <p>Explore and celebrate Peru's cultural treasures, now part of the public domain.</p>
+    <p class="subtext">Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
   </header>
   <main>
-    <div class="gallery" id="gallery"></div>
+    <div id="gallery" class="gallery"></div>
+    <button id="load-more" class="load-more">Load More</button>
   </main>
   <footer>
-    <p>Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
+    <p>© 2024 Peruvian Declassified Art</p>
   </footer>
-  <script>
-    async function loadImages() {
-      const gallery = document.getElementById('gallery');
-      try {
-        const response = await fetch('images.json');
-        const images = await response.json();
-
-        images.forEach((url) => {
-          const container = document.createElement('div');
-          container.className = 'image-container';
-
-          const img = document.createElement('img');
-          img.src = url;
-          img.alt = 'Peruvian Artwork';
-          img.loading = 'lazy';
-
-          // Handle image load errors gracefully
-          img.onerror = () => {
-            container.remove(); // Remove the container if the image doesn't load
-          };
-
-          container.appendChild(img);
-          gallery.appendChild(container);
-        });
-      } catch (error) {
-        console.error('Error loading images:', error);
-        gallery.innerHTML = `<p>Failed to load images. Please try again later.</p>`;
-      }
-    }
-
-    // Load images on page load
-    window.onload = loadImages;
-  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>
