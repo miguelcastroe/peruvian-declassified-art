@@ -1,61 +1,63 @@
-// Select elements from the DOM
 const gallery = document.getElementById("gallery");
 const loadMoreBtn = document.getElementById("loadMore");
-let currentPage = 1; // Start with the first page
-const totalPages = 8; // Total number of pages
+let currentPage = 1;
+const totalPages = 8;
 
-// Function to load images from a specific page
 async function loadImages(page) {
+  console.log(`Loading images from images_page${page}.json`);
   try {
-    // Fetch the JSON file for the given page
     const response = await fetch(`images_page${page}.json`);
     if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      console.error(`Failed to load JSON file images_page${page}.json: ${response.status}`);
+      return;
     }
 
-    // Parse the JSON response
     const imageUrls = await response.json();
 
-    // Validate the JSON format
+    // Verify the imageUrls is an array
     if (!Array.isArray(imageUrls)) {
-      throw new Error("Invalid JSON format: Expected an array of image URLs");
+      console.error("Invalid JSON format: Expected an array of URLs.");
+      return;
     }
 
-    // Iterate over the image URLs and create image elements
     imageUrls.forEach((url) => {
-      const img = document.createElement("img");
-      img.src = url; // Set the image source
-      img.alt = "Peruvian Art"; // Alt text for accessibility
-      img.loading = "lazy"; // Use lazy loading for performance
-      img.classList.add("gallery-image"); // Add a CSS class for styling
+      console.log(`Loading image URL: ${url}`);
+      const imgContainer = document.createElement("div");
+      imgContainer.classList.add("image-container");
 
-      // Handle image load errors
-      img.onerror = (event) => {
-        console.error(`Image failed to load: ${event.target.src}`);
-        img.remove(); // Remove the broken image
+      const img = document.createElement("img");
+      img.src = url.trim(); // Ensure no extra whitespace
+      img.alt = "Peruvian Art";
+      img.loading = "lazy";
+      img.classList.add("gallery-image");
+
+      img.onload = () => {
+        console.log(`Image successfully loaded: ${url}`);
       };
 
-      // Append the image to the gallery
-      gallery.appendChild(img);
+      img.onerror = () => {
+        console.warn(`Image failed to load: ${url}`);
+        imgContainer.innerHTML = `<div class="error-placeholder">Image not found</div>`;
+      };
+
+      imgContainer.appendChild(img);
+      gallery.appendChild(imgContainer);
     });
   } catch (error) {
-    // Log errors to the console
-    console.error(`Failed to load images for page ${page}:`, error.message);
+    console.error(`Error loading images from page ${page}:`, error);
   }
 }
 
-// Event listener for the "Load More" button
+// Event listener for "Load More" button
 loadMoreBtn.addEventListener("click", () => {
   if (currentPage < totalPages) {
-    currentPage += 1; // Increment the current page
-    loadImages(currentPage); // Load images from the next page
+    currentPage++;
+    loadImages(currentPage);
   }
-
-  // Hide the "Load More" button if all pages are loaded
   if (currentPage === totalPages) {
     loadMoreBtn.style.display = "none";
   }
 });
 
-// Initial load of the first page
+// Load the first page
 loadImages(currentPage);
