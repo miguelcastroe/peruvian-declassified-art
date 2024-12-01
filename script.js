@@ -1,57 +1,61 @@
-const gallery = document.getElementById('gallery');
-const loadMoreButton = document.getElementById('loadMoreButton');
+// Select elements from the DOM
+const gallery = document.getElementById("gallery");
+const loadMoreBtn = document.getElementById("loadMore");
+let currentPage = 1; // Start with the first page
+const totalPages = 8; // Total number of pages
 
-let currentPage = 1;
-const totalPages = 8; // Number of JSON files
-
-// Create an image container
-function createImageContainer(url) {
-  const imageContainer = document.createElement('div');
-  imageContainer.className = 'image-container';
-
-  const img = document.createElement('img');
-  img.src = url;
-  img.alt = 'Peruvian Art';
-  
-  img.onerror = () => {
-    console.warn(`Image failed to load: ${url}`);
-    imageContainer.remove();
-  };
-
-  imageContainer.appendChild(img);
-  return imageContainer;
-}
-
-// Load images from JSON
+// Function to load images from a specific page
 async function loadImages(page) {
   try {
+    // Fetch the JSON file for the given page
     const response = await fetch(`images_page${page}.json`);
     if (!response.ok) {
-      console.error(`Failed to load JSON for page ${page}:`, response.status);
-      return;
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    // Parse the JSON response
     const imageUrls = await response.json();
-    imageUrls.forEach(url => {
-      const imageContainer = createImageContainer(url);
-      gallery.appendChild(imageContainer);
+
+    // Validate the JSON format
+    if (!Array.isArray(imageUrls)) {
+      throw new Error("Invalid JSON format: Expected an array of image URLs");
+    }
+
+    // Iterate over the image URLs and create image elements
+    imageUrls.forEach((url) => {
+      const img = document.createElement("img");
+      img.src = url; // Set the image source
+      img.alt = "Peruvian Art"; // Alt text for accessibility
+      img.loading = "lazy"; // Use lazy loading for performance
+      img.classList.add("gallery-image"); // Add a CSS class for styling
+
+      // Handle image load errors
+      img.onerror = (event) => {
+        console.error(`Image failed to load: ${event.target.src}`);
+        img.remove(); // Remove the broken image
+      };
+
+      // Append the image to the gallery
+      gallery.appendChild(img);
     });
   } catch (error) {
-    console.error(`Error loading images for page ${page}:`, error);
+    // Log errors to the console
+    console.error(`Failed to load images for page ${page}:`, error.message);
   }
 }
 
-// Load more button functionality
-loadMoreButton.addEventListener('click', () => {
+// Event listener for the "Load More" button
+loadMoreBtn.addEventListener("click", () => {
   if (currentPage < totalPages) {
-    currentPage++;
-    loadImages(currentPage);
+    currentPage += 1; // Increment the current page
+    loadImages(currentPage); // Load images from the next page
   }
-  if (currentPage >= totalPages) {
-    loadMoreButton.style.display = 'none';
+
+  // Hide the "Load More" button if all pages are loaded
+  if (currentPage === totalPages) {
+    loadMoreBtn.style.display = "none";
   }
 });
 
-// Initial load
-document.addEventListener('DOMContentLoaded', () => {
-  loadImages(currentPage);
-});
+// Initial load of the first page
+loadImages(currentPage);
