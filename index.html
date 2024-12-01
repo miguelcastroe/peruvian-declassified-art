@@ -1,44 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Peruvian Declassified Art</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore and celebrate Peru's cultural treasures, now part of the public domain.">
+  <title>Peruvian Declassified Art by Miguel Castro</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Peruvian Declassified Art</h1>
-        <p>Explore and celebrate Peru's cultural treasures, now part of the public domain.</p>
-    </header>
-    <main>
-        <div class="gallery" id="gallery"></div>
-    </main>
-    <footer>
-        <p>Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
-    </footer>
-
-    <script>
-        // Fetch and display images from images.json
-        fetch('images.json')
-            .then(response => response.json())
-            .then(images => {
-                const gallery = document.getElementById('gallery');
-                images.forEach(image => {
-                    const imgDiv = document.createElement('div');
-                    imgDiv.className = 'image-container';
-                    imgDiv.innerHTML = `
-                        <img src="${image.src}" alt="${image.alt}">
-                        <p>${image.alt}</p>
-                    `;
-                    gallery.appendChild(imgDiv);
-                });
-            })
-            .catch(error => {
-                console.error('Error loading images:', error);
-                const gallery = document.getElementById('gallery');
-                gallery.innerHTML = '<p>Failed to load images. Please try again later.</p>';
-            });
-    </script>
+  <header class="header">
+    <a href="#" class="header-home">Peruvian Declassified Art</a>
+  </header>
+  
+  <main>
+    <section class="gallery">
+      <!-- Images will be dynamically inserted here -->
+    </section>
+  </main>
+  
+  <footer class="footer">
+    <p>Powered by the public domain. Bringing Peru's cultural heritage closer to everyone.</p>
+  </footer>
+  
+  <script src="script.js"></script>
 </body>
 </html>
